@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import './screens/tabs_screen.dart';
 
 import './screens/meal_detail_screen.dart';
-
 
 import 'screens/category_meal_screen.dart';
 
@@ -29,26 +29,31 @@ class MyApp extends StatelessWidget {
           canvasColor: Color.fromRGBO(255, 254, 229, 1),
           fontFamily: 'Raleway',
           textTheme: ThemeData.light().textTheme.copyWith(
-                bodyLarge: TextStyle(
-                  color: Color.fromRGBO(20, 51, 51, 1),
-                ),
-                bodyMedium: TextStyle(
-                  color: Color.fromRGBO(20, 51, 51, 1),
-                ),
-                titleSmall: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'RobotoCondensed',
-                ) 
-              )),
+              bodyLarge: TextStyle(
+                color: Color.fromRGBO(20, 51, 51, 1),
+              ),
+              bodyMedium: TextStyle(
+                color: Color.fromRGBO(20, 51, 51, 1),
+              ),
+              titleSmall: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'RobotoCondensed',
+              ))),
       // home: CategoriesScreen(),
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (ctx) => CategoriesScreen(),
+        '/': (ctx) => TabsScreen(),
         CategoryMealScreen.routeName: (ctx) => CategoryMealScreen(),
         MealDetailScreen.routeName: (ctx) => MealDetailScreen(),
       },
+      // onGenerateRoute: (settings) {
+      //   return MaterialPageRoute(builder: (ctx) => CategoriesScreen());
+      // },
+      onUnknownRoute: ((settings) {
+        return MaterialPageRoute(builder: (ctx) => CategoriesScreen());
+      }),
     );
   }
 }
