@@ -2,14 +2,15 @@
 
 import 'package:flutter/material.dart';
 
-import '../dummy_data.dart';
+
 import '../widgets/meal_item.dart';
 import '../models/meal.dart';
 
 class CategoryMealScreen extends StatefulWidget {
   static const routeName = '/category-meals';
+  final List<Meal> availableMeals;
 
-  const CategoryMealScreen({super.key});
+  const CategoryMealScreen(this.availableMeals, {super.key});
 
   @override
   State<CategoryMealScreen> createState() => _CategoryMealScreenState();
@@ -18,6 +19,7 @@ class CategoryMealScreen extends StatefulWidget {
 class _CategoryMealScreenState extends State<CategoryMealScreen> {
   String? categoryTitle;
   List<Meal>? displayedMeals;
+  
   var _loadedInitData = false;
 
   @override
@@ -31,15 +33,15 @@ class _CategoryMealScreenState extends State<CategoryMealScreen> {
   void didChangeDependencies() {
     if (!_loadedInitData) {
       final routeArgs =
-        ModalRoute.of(context)?.settings.arguments as Map<String, String>;
-    categoryTitle = routeArgs['title'];
-    final categoryId = routeArgs['id'];
-    displayedMeals = DUMMY_MEALS.where((meal) {
-      return meal.categories.contains(categoryId);
-    }).toList();
-    _loadedInitData = true;
+          ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+      categoryTitle = routeArgs['title'];
+      final categoryId = routeArgs['id'];
+      displayedMeals = widget.availableMeals.where((meal) {
+        return meal.categories.contains(categoryId);
+      }).toList();
+      _loadedInitData = true;
     }
-    
+
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
@@ -53,7 +55,6 @@ class _CategoryMealScreenState extends State<CategoryMealScreen> {
   // final String categoryId;
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         title: Text(categoryTitle!),
